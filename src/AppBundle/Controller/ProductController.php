@@ -16,22 +16,30 @@ use AppBundle\Form\ProductType;
  */
 class ProductController extends Controller
 {
+
     /**
      * Lists all Product entities.
      *
-     * @Route("/", name="product_index")
+     * @Route("/list/{manufactureName}", name="product_index", defaults={"manufactureName" = null })
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction($manufactureName = null)
     {
         $em = $this->getDoctrine()->getManager();
         
         $manufactures = $em->getRepository('AppBundle:ProductManufacture')->findAll();
-        $products = $em->getRepository('AppBundle:Product')->findAll();
+        
+        if (!$manufactureName) {
+            $products = $em->getRepository('AppBundle:Product')->findAll();
+        } else {
+            $products = $em->getRepository('AppBundle:Product')->getProductByManufacture($manufactureName);
+        }
+
+        
 
         return $this->render('product/index.html.twig', array(
-            'products' => $products,
-            'manufactures' => $manufactures,
+                    'products' => $products,
+                    'manufactures' => $manufactures,
         ));
     }
 
@@ -56,8 +64,8 @@ class ProductController extends Controller
         }
 
         return $this->render('product/new.html.twig', array(
-            'product' => $product,
-            'form' => $form->createView(),
+                    'product' => $product,
+                    'form' => $form->createView(),
         ));
     }
 
@@ -72,8 +80,8 @@ class ProductController extends Controller
         $deleteForm = $this->createDeleteForm($product);
 
         return $this->render('product/show.html.twig', array(
-            'product' => $product,
-            'delete_form' => $deleteForm->createView(),
+                    'product' => $product,
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -98,9 +106,9 @@ class ProductController extends Controller
         }
 
         return $this->render('product/edit.html.twig', array(
-            'product' => $product,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+                    'product' => $product,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
         ));
     }
 
@@ -134,9 +142,10 @@ class ProductController extends Controller
     private function createDeleteForm(Product $product)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('product_delete', array('id' => $product->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
+                        ->setAction($this->generateUrl('product_delete', array('id' => $product->getId())))
+                        ->setMethod('DELETE')
+                        ->getForm()
         ;
     }
+
 }

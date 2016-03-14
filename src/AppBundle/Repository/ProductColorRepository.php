@@ -9,5 +9,5 @@ namespace AppBundle\Repository;
  * repository methods below.
  */
 class ProductColorRepository extends \Doctrine\ORM\EntityRepository
-{
+{    
 }

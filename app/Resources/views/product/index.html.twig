@@ -14,8 +14,9 @@
     <div class="col-md-2">
         <h3>Producenci</h3>
         <ul class="list-group">
+                <a href="{{ path('product_index',{'manufactureName': null }) }}" class="list-group-item">Wszystkie</a>
             {% for manufacture in manufactures %}
-                <button type="button" class="list-group-item">{{ manufacture.name }}</button>
+                <a href="{{ path('product_index',{'manufactureName': manufacture.name }) }}" class="list-group-item">{{ manufacture.name }}</a>
             {% endfor %}
         </ul>
     </div>

@@ -10,4 +10,17 @@ namespace AppBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getProductByManufacture($manufactureName){
+        $query = $this->getEntityManager()->createQuery(
+                'SELECT p '
+                . 'FROM AppBundle:Product p '
+                . 'LEFT JOIN p.maufacture m '
+                . 'WHERE m.name = :name '
+                . 'ORDER BY p.name ASC'
+                );
+        
+        $query->setParameter('name', $manufactureName);
+        
+        return $query->getResult();
+    }
 }
