@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Contractors</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contractor.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ contractor.name }}</td>
+            </tr>
+            <tr>
+                <th>Street</th>
+                <td>{{ contractor.street }}</td>
+            </tr>
+            <tr>
+                <th>Streetnumber</th>
+                <td>{{ contractor.streetNumber }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ contractor.city }}</td>
+            </tr>
+            <tr>
+                <th>Postcode</th>
+                <td>{{ contractor.postcode }}</td>
+            </tr>
+            <tr>
+                <th>Nip</th>
+                <td>{{ contractor.nip }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ contractor.type }}</td>
+            </tr>
+            <tr>
+                <th>Discount</th>
+                <td>{{ contractor.discount }}</td>
+            </tr>
+            <tr>
+                <th>Phone</th>
+                <td>{{ contractor.phone }}</td>
+            </tr>
+            <tr>
+                <th>Buylimit</th>
+                <td>{{ contractor.buyLimit }}</td>
+            </tr>
+            <tr>
+                <th>Contract</th>
+                <td>{% if contractor.contract %}Yes{% else %}No{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ contractor.email }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('contractors_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('contractors_edit', { 'id': contractor.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

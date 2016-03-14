@@ -1,0 +1,334 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Orders
+ *
+ * @ORM\Table(name="orders")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\OrdersRepository")
+ */
+class Orders
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="realisationDate", type="date", nullable=true)
+     */
+    private $realisationDate;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="isSended", type="boolean", nullable=true)
+     */
+    private $isSended;
+    
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
+    
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="transhipment_square", type="boolean", nullable=true)
+     */
+    private $transhipment_square;
+    
+    /**
+     * var string
+     * 
+     * @ORM\Column(name="destination", type="string")
+     */
+    private $destination;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Driver", inversedBy="orders")
+     */
+    private $driver;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Contractors", inversedBy="order")
+     */
+    private $client;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="ProductManufacture", inversedBy="orders")
+     */
+    private $manufacture;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="order")
+     */
+    private $createdBy;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="OrderItem", mappedBy="order")
+     */
+    private $items;
+    
+    public function __toString()
+    {
+        return $this->client->getName();
+    }
+
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set realisationDate
+     *
+     * @param \DateTime $realisationDate
+     *
+     * @return Orders
+     */
+    public function setRealisationDate($realisationDate)
+    {
+        $this->realisationDate = $realisationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get realisationDate
+     *
+     * @return \DateTime
+     */
+    public function getRealisationDate()
+    {
+        return $this->realisationDate;
+    }
+
+    /**
+     * Set isSended
+     *
+     * @param boolean $isSended
+     *
+     * @return Orders
+     */
+    public function setIsSended($isSended)
+    {
+        $this->isSended = $isSended;
+
+        return $this;
+    }
+
+    /**
+     * Get isSended
+     *
+     * @return bool
+     */
+    public function getIsSended()
+    {
+        return $this->isSended;
+    }
+
+    /**
+     * Set destination
+     *
+     * @param string $destination
+     *
+     * @return Orders
+     */
+    public function setDestination($destination)
+    {
+        $this->destination = $destination;
+
+        return $this;
+    }
+
+    /**
+     * Get destination
+     *
+     * @return string
+     */
+    public function getDestination()
+    {
+        return $this->destination;
+    }
+
+    
+
+    /**
+     * Set client
+     *
+     * @param \AppBundle\Entity\Contractors $client
+     *
+     * @return Orders
+     */
+    public function setClient(\AppBundle\Entity\Contractors $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \AppBundle\Entity\Contractors
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param \AppBundle\Entity\User $createdBy
+     *
+     * @return Orders
+     */
+    public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Orders
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set transhipmentSquare
+     *
+     * @param boolean $transhipmentSquare
+     *
+     * @return Orders
+     */
+    public function setTranshipmentSquare($transhipmentSquare)
+    {
+        $this->transhipment_square = $transhipmentSquare;
+
+        return $this;
+    }
+
+    /**
+     * Get transhipmentSquare
+     *
+     * @return boolean
+     */
+    public function getTranshipmentSquare()
+    {
+        return $this->transhipment_square;
+    }
+
+    /**
+     * Set driver
+     *
+     * @param \AppBundle\Entity\Driver $driver
+     *
+     * @return Orders
+     */
+    public function setDriver(\AppBundle\Entity\Driver $driver = null)
+    {
+        $this->driver = $driver;
+
+        return $this;
+    }
+
+    /**
+     * Get driver
+     *
+     * @return \AppBundle\Entity\Driver
+     */
+    public function getDriver()
+    {
+        return $this->driver;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add item
+     *
+     * @param \AppBundle\Entity\OrderItem $item
+     *
+     * @return Orders
+     */
+    public function addItem(\AppBundle\Entity\OrderItem $item)
+    {
+        $this->items[] = $item;
+
+        return $this;
+    }
+
+    /**
+     * Remove item
+     *
+     * @param \AppBundle\Entity\OrderItem $item
+     */
+    public function removeItem(\AppBundle\Entity\OrderItem $item)
+    {
+        $this->items->removeElement($item);
+    }
+
+    /**
+     * Get items
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getItems()
+    {
+        return $this->items;
+    }
+}

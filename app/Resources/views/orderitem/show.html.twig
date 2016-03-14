@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>OrderItem</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ orderItem.id }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>{{ orderItem.quantity }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('orderitem_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('orderitem_edit', { 'id': orderItem.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

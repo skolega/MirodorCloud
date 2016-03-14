@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Nowe Zamówienie</h1><a href="{{ path('orders_index') }}" class="btn btn-warning">Wróć do listy</a>
+    <div class="row">
+        <div class="col-md-6 col-md-pull-3 col-md-push-3">
+            {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <div class="col-md-6">
+                <fieldset class="form-group">
+                    {{ form_label(form.manufacture,'Producent', { 'attr': {'class': 'sr-only'} }) }}
+                    {{ form_row(form.manufacture, { 'attr': {'class': 'form-control'} }) }}
+                </fieldset>
+                <fieldset class="form-group">
+                    {{ form_label(form.client,'Odbiorca', { 'attr': {'class': 'sr-only'} }) }}
+                    {{ form_row(form.client, { 'attr': {'class': 'form-control'} }) }}
+                </fieldset>
+            </div>
+            <div class="col-md-6">
+                <fieldset class="form-group">
+                    {{ form_label(form.realisationDate,'Data dostawy', { 'attr': {'class': 'sr-only'} }) }}
+                    {{ form_row(form.realisationDate) }}
+                </fieldset>
+                <fieldset class="form-group">
+                    {{ form_label(form.status,'Status', { 'attr': {'class': 'sr-only'} }) }}
+                    {{ form_row(form.status, { 'attr': {'class': 'form-control'} }) }}
+                </fieldset>
+            </div>
+            <div class="col-md-6">
+                <fieldset class="form-group">
+                    {{ form_label(form.isSended,'Status wysyłki', { 'attr': {'class': 'sr-only'} }) }}
+                    {{ form_row(form.isSended, { 'attr': {'class': 'form-control'} }) }}
+                </fieldset>
+                <fieldset class="form-group">
+                    {{ form_label(form.destination,'Adres dostawy', { 'attr': {'class': 'sr-only'} }) }}
+                    {{ form_row(form.destination, { 'attr': {'class': 'form-control'} }) }}
+                </fieldset>
+            </div>
+            <div class="col-md-6">
+                <fieldset class="form-group">
+                    {{ form_label(form.transhipment_square,'Przeładunek', { 'attr': {'class': 'sr-only'} }) }}
+                    {{ form_row(form.transhipment_square, { 'attr': {'class': 'form-control'} }) }}
+                </fieldset>
+                <fieldset class="form-group">
+                    {{ form_label(form.driver,'Transport', { 'attr': {'class': 'sr-only'} }) }}
+                    {{ form_row(form.driver, { 'attr': {'class': 'form-control'} }) }}
+                </fieldset>
+            </div>
+            <div class="col-md-6">
+                <input type="submit" value="Utwórz" class="btn btn-default"/>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+    <script>
+        $('.datepicker').datepicker();
+    </script>
+
+{% endblock %}

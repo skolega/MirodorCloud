@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>ProductManufacture list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Telephone</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for productManufacture in productManufactures %}
+            <tr>
+                <td><a href="{{ path('productmanufacture_show', { 'id': productManufacture.id }) }}">{{ productManufacture.id }}</a></td>
+                <td>{{ productManufacture.name }}</td>
+                <td>{{ productManufacture.email }}</td>
+                <td>{{ productManufacture.telephone }}</td>
+                <td>{{ productManufacture.address }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('productmanufacture_show', { 'id': productManufacture.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('productmanufacture_edit', { 'id': productManufacture.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('productmanufacture_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

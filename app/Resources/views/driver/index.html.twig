@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Driver list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Carnumber</th>
+                <th>Drivername</th>
+                <th>Driverphone</th>
+                <th>Carcapacity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for driver in drivers %}
+            <tr>
+                <td><a href="{{ path('driver_show', { 'id': driver.id }) }}">{{ driver.id }}</a></td>
+                <td>{{ driver.name }}</td>
+                <td>{{ driver.carNumber }}</td>
+                <td>{{ driver.driverName }}</td>
+                <td>{{ driver.driverPhone }}</td>
+                <td>{{ driver.carCapacity }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('driver_show', { 'id': driver.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('driver_edit', { 'id': driver.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('driver_new') }}">Create a new entry</a>
+        </li>
+    </ul>
+{% endblock %}

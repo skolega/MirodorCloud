@@ -1,0 +1,112 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Zamówienie {{ order.id }} </h1>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-hover table-bordered">
+                <tbody>
+                    <tr>
+                        <th>Producent</th>
+                        <td>{{ order.manufacture.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Kliejent</th>
+                        <td>{{ order.client.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Adres dostawy</th>
+                        <td>{{ order.destination }}</td>
+                    </tr>
+                    <tr>
+                        <th>Data</th>
+                        <td>{% if order.realisationDate %}{{ order.realisationDate|date('Y-m-d') }}{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>
+                            {% if order.status == 1 %}
+                                <span class="label label-default">Nowe</span>
+                            {% elseif order.status == 2 %}
+                                <span class="label label-primary">Przygotowane</span>
+                            {% elseif order.status == 3 %}
+                                <span class="label label-success">W realizacji</span>    
+                            {% elseif order.status == 4 %}
+                                <span class="label label-warning">Wysłane</span>        
+                            {% elseif order.status == 5 %}
+                                <span class="label label-success">Zrealizowane</span>            
+                            {% else %}
+                                <span class="label label-default">Nieznane</span>                
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Przeładunek - plac</th>
+                        <td>{% if order.transhipmentsquare %}Tak{% else %}Nie{% endif %}</td>
+                    </tr>
+                    <tr>
+                        <th>Wysłane</th>
+                        <td>{% if order.isSended %}
+                            Tak
+                            {% else %}
+                            <a href="{{ path('send_order', {'id' : order.id, 'to': order.manufacture.email }) }}" class="btn btn-warning">
+Wyślij
+</a>
+{% endif %}
+</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Produkt</th>
+                        <th>Ilość j.</th>
+                        <th></th>
+                        <th>Ilość op.</th>
+                        <th>Opcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in order.items %}
+                        <tr>
+                            <td>{{ product.product.name }}</td>
+                            <td><input name="quantity" type="text" value="{{ product.quantity }}"></input> {{ product.product.unit }}</td>
+                            <td><a href="" class="btn btn-default">Zmień</a></td>
+                            <td>{{ (product.quantity / product.product.packaging) | round(2, 'ceil') }}</td>
+                            <td><a href="{{ path('orderitem_fastdelete',{'id': product.id, 'orderId' : order.id }) }}" class="btn btn-danger">Usuń</a></td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        {{ form_start(form) }}
+                        {{ form_errors(form) }}
+
+                        <td>{{ form_row(form.product) }}</td>
+                        <td>{{ form_row(form.quantity) }}</td>
+                        <td><input type="submit" value="Dodaj" class="btn btn-default"/></td>
+                        <td></td>
+                        {{ form_end(form) }}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-3 col-md-push-9">
+        <ul class="list-inline">
+            <li>
+                <a href="{{ path('orders_index') }}" class="btn btn-primary">Wróć do listy</a>
+            </li>
+            <li>
+                <a href="{{ path('orders_edit', { 'id': order.id }) }}" class="btn btn-success">Edytuj</a>
+            </li>
+            <li>
+                {{ form_start(delete_form) }}
+                <input type="submit" value="Usuń" class="btn btn-danger">
+                {{ form_end(delete_form) }}
+            </li>
+        </ul>
+    </div>
+{% endblock %}

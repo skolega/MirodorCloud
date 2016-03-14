@@ -1,0 +1,80 @@
+{% extends "base.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' _self %}
+{% block form_label_class -%}col-sm-4{%- endblock form_label_class %}
+    {% block form_group_class -%}col-sm-8{%- endblock form_group_class %}
+
+
+        {% block body %}
+            <div class="container">
+                {% for type, messages in app.session.flashbag.all() %}
+                    {% for message in messages %}
+                        <div class="flash-{{ type }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                <div class="row">
+                    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+                        <form role="form" action="{{ path('fos_user_registration_register') }}" method="POST">
+                            <h2>ZArejestruj się <small>To nic nie kosztuje</small></h2>
+                            <hr class="colorgraph">
+                            <div class="form-group">
+                                {{ form_row(form.email) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(form.username) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_row(form.plainPassword) }}
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4 col-sm-3 col-md-3">
+                                    <span class="button-checkbox">
+                                        <button type="button" class="btn" data-color="info" tabindex="7">Zgadzam się</button>
+                                        <input type="checkbox" name="t_and_c" id="t_and_c" class="hidden" value="1">
+                                    </span>
+                                </div>
+                                <div class="col-xs-8 col-sm-9 col-md-9">
+                                    Klikając <strong class="label label-primary">Zarejestruj</strong>, wyrażasz zgodę na <a href="#" data-toggle="modal" data-target="#t_and_c_m">Regulamin</a> i warunki określone przez tę stronę , w tym nasze Ciasteczka(Cookie).
+                                </div>
+                            </div>
+
+                            <hr class="colorgraph">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6"><input type="submit" value="Zarejestruj" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
+                                <div class="col-xs-12 col-md-6"><a href="{{ path('fos_user_security_login') }}" class="btn btn-success btn-block btn-lg">Zaloguj</a></div>
+                            </div>
+                            {{ form_rest(form) }}
+                        </form>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="t_and_c_m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                <h4 class="modal-title" id="myModalLabel">Regulamin</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique, itaque, modi, aliquam nostrum at sapiente consequuntur natus odio reiciendis perferendis rem nisi tempore possimus ipsa porro delectus quidem dolorem ad.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal">Wyrażam zgodę</button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+            </div>
+
+        {% endblock %}
+
+
